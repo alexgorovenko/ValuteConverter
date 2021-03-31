@@ -9,6 +9,23 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!-- <ComboBox Name="_firstValute" Height="50" Width="200" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+        <ComboBox Name="_secondValute" Height="50" Width="200" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="0" Grid.Column="2"/> -->
+        <HyperlinkButton Name="_firstValuteSelect" Content="Select valute" Click="ValuteSelect_click" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+        <HyperlinkButton Name="_secondValuteSelect" Content="Select valute" Click="ValuteSelect_click" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="0" Grid.Column="2"/>
+        <TextBox Name="_firstCount" Height="100" Width="200" Grid.Row="1" Grid.Column="0" TextChanged="TextChanged"/>
+        <TextBox Name="_secondCount" Height="100" Width="200" Grid.Row="1" Grid.Column="2" TextChanged="TextChanged"/>
+        <TextBlock Name="_firstRates" Height="100" Width="200" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="2" Grid.Column="0"/>
+        <TextBlock Name="_secondRates" Height="100" Width="200" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="2" Grid.Column="2"/>
     </Grid>
 </Page>

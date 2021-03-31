@@ -30,12 +30,17 @@ namespace ValuteConverter
 
             return HtmlText;
         }
-
         public void Parse()
         {
             string jsonString = GetHtmlPage();
 
             _data = JsonConvert.DeserializeObject<Data>(jsonString);
+            
+            if (!_data.Valute.Keys.Contains("RUB"))
+            {
+                Currency _tmp = new Currency("R000001", "643", "RUB", "Российский рубль", 1, 1, 1);
+                _data.Valute.Add("RUB", _tmp);
+            }
         }
 
         public List<Currency> GetList()
@@ -50,7 +55,7 @@ namespace ValuteConverter
             Currency _first = _data.Valute.FirstOrDefault(x => x.Value._name == first).Value;
             Currency _second = _data.Valute.FirstOrDefault(x => x.Value._name == second).Value;
 
-            return multiplier * ((_first._value / _first._nominal) / (_second._value / _second._nominal));
+            return Math.Round( multiplier * ((_first._value / _first._nominal) / (_second._value / _second._nominal)), 2);
         }
     }
 }

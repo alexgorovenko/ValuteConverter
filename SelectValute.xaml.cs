@@ -25,13 +25,17 @@ namespace ValuteConverter
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if ((e.Parameter != null) && (e.Parameter is KeyValuePair<List<Currency>, bool>) )
+            if ((e.Parameter != null) && (e.Parameter is KeyValuePair<List<Currency>, bool>))
             {
                 KeyValuePair<List<Currency>, bool> _tmp = (KeyValuePair<List<Currency>, bool>)e.Parameter;
                 if (_tmp.Value == true)
+                {
                     _isFirst = true;
+                }
                 else
+                {
                     _isFirst = false;
+                }
                 foreach (Currency _valute in _tmp.Key)
                 {
                     Valutes.Items.Add(_valute._name);

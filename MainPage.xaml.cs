@@ -24,19 +24,19 @@ namespace ValuteConverter
             this.InitializeComponent();
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
             _logic = new Logic(_url);
-            _progressRing.IsActive = false;
-        }
-        private void Timer_Tick(object sender, object e)
-        {
         }
         private void ValuteSelect_click(object sender, RoutedEventArgs e)
         {
             HyperlinkButton _tmp = (HyperlinkButton)sender;
             bool _isFirst;
             if (_tmp.Name == "_firstValuteSelect")
+            {
                 _isFirst = true;
+            }
             else
+            {
                 _isFirst = false;
+            }
             this.Frame.Navigate(typeof(SelectValute), new KeyValuePair<List<Currency>, bool>(_logic.GetList(), _isFirst));
         }
 
@@ -92,7 +92,9 @@ namespace ValuteConverter
                 {
                     newText += c;
                     if (c == ',')
+                    {
                         count += 1;
+                    }
                 }
             }
             textBox.Text = newText;

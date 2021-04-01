@@ -50,6 +50,13 @@ namespace ValuteConverter
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
+                if (e.PreviousExecutionState != ApplicationExecutionState.Running)
+                {
+                    bool loadState = (e.PreviousExecutionState == ApplicationExecutionState.Terminated);
+                    ExtendedSplash extendedSplash = new ExtendedSplash(e.SplashScreen, loadState);
+                    rootFrame.Content = extendedSplash;
+                }
+
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
                     //TODO: Загрузить состояние из ранее приостановленного приложения

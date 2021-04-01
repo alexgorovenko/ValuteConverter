@@ -24,8 +24,11 @@ namespace ValuteConverter
             this.InitializeComponent();
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
             _logic = new Logic(_url);
+            _progressRing.IsActive = false;
         }
-
+        private void Timer_Tick(object sender, object e)
+        {
+        }
         private void ValuteSelect_click(object sender, RoutedEventArgs e)
         {
             HyperlinkButton _tmp = (HyperlinkButton)sender;
@@ -43,11 +46,37 @@ namespace ValuteConverter
             {
                 KeyValuePair<string, bool> _tmp = (KeyValuePair<string, bool>)e.Parameter;
                 if (_tmp.Value == true)
+                {
                     _firstRates.Text = _tmp.Key.ToString();
+                }
                 else
+                {
                     _secondRates.Text = _tmp.Key.ToString();
+                }
+                calc(_tmp.Value);
             }
             base.OnNavigatedTo(e);
+        }
+
+        private void calc(bool _isFirst)
+        {
+            if  ((!string.IsNullOrEmpty(_firstRates.Text)) && (!string.IsNullOrEmpty(_secondRates.Text)))
+            {
+                if (_isFirst == true)
+                {
+                    if (!string.IsNullOrEmpty(_firstCount.Text))
+                    {
+                        _secondCount.Text = _logic.Convert(_firstRates.Text, _secondRates.Text, double.Parse(_firstCount.Text)).ToString();
+                    }
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(_secondCount.Text))
+                    {
+                        _firstCount.Text = _logic.Convert(_secondRates.Text, _firstRates.Text, double.Parse(_secondCount.Text)).ToString();
+                    }
+                }
+            }
         }
 
         private void TextChanged(object sender, TextChangedEventArgs e)
@@ -68,19 +97,15 @@ namespace ValuteConverter
             }
             textBox.Text = newText;
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
-
-            if ( (_firstRates.Text != "") && (_secondRates.Text != "") )
+            
+            if (textBox.Name == "_firstCount")
             {
-                if ((textBox.Name == "_firstCount") && (textBox.Text != ""))
-                {
-                    _secondCount.Text = _logic.Convert(_firstRates.Text, _secondRates.Text, double.Parse(textBox.Text)).ToString();
-                }
-                if ((textBox.Name == "_secondCount") && (textBox.Text != ""))
-                {
-                    _firstCount.Text = _logic.Convert(_secondRates.Text, _firstRates.Text, double.Parse(textBox.Text)).ToString();
-                }
+                calc(true);
             }
-
+            else
+            {
+                calc(false);
+            }
         }
     }
 }
